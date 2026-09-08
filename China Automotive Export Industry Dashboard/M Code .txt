@@ -1,0 +1,189 @@
+let
+    // ============================================================
+    // UN COMTRADE - CHINA PASSENGER CAR EXPORTS BY MOTOR TYPE
+    // ============================================================
+
+    ApiKey = "Your API Free Key ",
+
+    // 1. YEARS
+    StartYear = 2022,
+    CurrentYear = Date.Year(DateTime.LocalNow()),
+    Years = {StartYear..CurrentYear},
+    Periods = Text.Combine(List.Transform(Years, each Text.From(_)), ","),
+
+    // 2. QUERY PARAMETERS
+    ReporterCode = "156",
+    FlowCode = "X",
+    
+    // Explicit 6-digit codes for all 8703 motor types
+    CarHS6Digit = "870310,870321,870322,870323,870324,870331,870332,870333,870340,870350,870360,870370,870380,870390",
+
+    // 3. API REQUEST
+    ApiUrl = "https://comtradeapi.un.org/data/v1/get/C/A/HS",
+    
+    Source = Json.Document(
+        Web.Contents(
+            ApiUrl,
+            [
+                Query = [
+                    cmdCode = CarHS6Digit,
+                    period = Periods,
+                    reporterCode = ReporterCode,
+                    flowCode = FlowCode,
+                    partner2Code = "0",
+                    motCode = "0",
+                    customsCode = "C00",
+                    maxRecords = "100000",
+                    includeDesc = "true"
+                ],
+                Headers = [
+                    #"Ocp-Apim-Subscription-Key" = ApiKey,
+                    Accept = "application/json"
+                ],
+                Timeout = #duration(0, 0, 5, 0)
+            ]
+        )
+    ),
+
+    // 4. EXTRACT DATA ARRAY
+    Data = if Record.HasFields(Source, "data") then Source[data] else {},
+    RawTable = if List.Count(Data) > 0 then Table.FromRecords(Data) else #table({}, {}),
+
+    // 5. EXPAND COLUMNS
+    ExpandedTable = Table.SelectColumns(
+        RawTable,
+        {
+            "refYear", "reporterCode", "reporterISO", "reporterDesc",
+            "flowCode", "flowDesc", "partnerCode", "partnerISO", "partnerDesc",
+            "cmdCode", "cmdDesc", "classificationCode", "qtyUnitCode",
+            "qtyUnitAbbr", "qty", "netWgt", "fobvalue", "cifvalue", "primaryValue"
+        },
+        MissingField.UseNull
+    ),
+
+    // 6. RENAME COLUMNS
+    RenamedColumns = Table.RenameColumns(
+        ExpandedTable,
+        {
+            {"refYear", "Year"},
+            {"reporterCode", "Reporter Code"},
+            {"reporterISO", "Reporter ISO"},
+            {"reporterDesc", "Reporter"},
+            {"flowCode", "Flow Code"},
+            {"flowDesc", "Flow"},
+            {"partnerCode", "Partner Code"},
+            {"partnerISO", "Partner ISO"},
+            {"partnerDesc", "Partner"},
+            {"cmdCode", "HS Code"},
+            {"cmdDesc", "HS Description"},
+            {"classificationCode", "HS Classification"},
+            {"qtyUnitCode", "Quantity Unit Code"},
+            {"qtyUnitAbbr", "Quantity Unit"},
+            {"qty", "Quantity"},
+            {"netWgt", "Net Weight KG"},
+            {"fobvalue", "FOB Value USD"},
+            {"cifvalue", "CIF Value USD"},
+            {"primaryValue", "Trade Value USD"}
+        },
+        MissingField.Ignore
+    ),
+
+    // 7. FILTER EXPORTS & EXCLUDE CHINA DOMESTIC
+    ExportsOnly = Table.SelectRows(RenamedColumns, each ([Flow Code] = "X")),
+    ExcludeChina = Table.SelectRows(ExportsOnly, each ([Partner Code] <> 156 and [Partner ISO] <> "CHN")),
+
+    // 8. ADD VEHICLE CATEGORY
+    AddVehicleCategory = Table.AddColumn(
+        ExcludeChina,
+        "Vehicle Category",
+        each "Passenger Cars",
+        type text
+    ),
+
+    // 9. ADD MOTOR SUB-CATEGORY
+    AddSubCategory = Table.AddColumn(
+        AddVehicleCategory,
+        "Sub Category",
+        each
+            let hs = Text.From([HS Code]) in
+            
+            if Text.StartsWith(hs, "870380") then "Battery Electric Vehicle (BEV)"
+            else if Text.StartsWith(hs, "870360") then "Gasoline Plug-In Hybrid (PHEV)"
+            else if Text.StartsWith(hs, "870370") then "Diesel Plug-In Hybrid (PHEV)"
+            else if Text.StartsWith(hs, "870340") then "Gasoline Hybrid (HEV)"
+            else if Text.StartsWith(hs, "870350") then "Diesel Hybrid (HEV)"
+            else if Text.StartsWith(hs, "870321") then "Gasoline ICE (<= 1000 cc)"
+            else if Text.StartsWith(hs, "870322") then "Gasoline ICE (1000-1500 cc)"
+            else if Text.StartsWith(hs, "870323") then "Gasoline ICE (1500-3000 cc)"
+            else if Text.StartsWith(hs, "870324") then "Gasoline ICE (> 3000 cc)"
+            else if Text.StartsWith(hs, "870331") then "Diesel ICE (<= 1500 cc)"
+            else if Text.StartsWith(hs, "870332") then "Diesel ICE (1500-2500 cc)"
+            else if Text.StartsWith(hs, "870333") then "Diesel ICE (> 2500 cc)"
+            else if Text.StartsWith(hs, "870390") then "Fuel Cell / Hydrogen / Other"
+            else if Text.StartsWith(hs, "870310") then "Golf Carts & Snow Vehicles"
+            else "Unmapped Passenger Car",
+        type text
+    ),
+
+    // 10. CALCULATE METRICS
+    AddUnitPrice = Table.AddColumn(
+        AddSubCategory,
+        "Unit Price USD",
+        each if [Quantity] <> null and [Quantity] > 0 and [Trade Value USD] <> null 
+             then [Trade Value USD] / [Quantity] 
+             else null,
+        type number
+    ),
+
+    AddValuePerKg = Table.AddColumn(
+        AddUnitPrice,
+        "Value USD per KG",
+        each if [Net Weight KG] <> null and [Net Weight KG] > 0 and [Trade Value USD] <> null 
+             then [Trade Value USD] / [Net Weight KG] 
+             else null,
+        type number
+    ),
+
+    // 11. DATA TYPE CONVERSIONS
+    ChangedTypes = Table.TransformColumnTypes(
+        AddValuePerKg,
+        {
+            {"Year", Int64.Type},
+            {"Reporter Code", Int64.Type},
+            {"Partner Code", Int64.Type},
+            {"Reporter ISO", type text},
+            {"Partner ISO", type text},
+            {"Reporter", type text},
+            {"Partner", type text},
+            {"Flow", type text},
+            {"HS Code", type text},
+            {"HS Description", type text},
+            {"HS Classification", type text},
+            {"Vehicle Category", type text},
+            {"Sub Category", type text},
+            {"Quantity", type number},
+            {"Net Weight KG", type number},
+            {"Trade Value USD", type number},
+            {"FOB Value USD", type number},
+            {"CIF Value USD", type number},
+            {"Unit Price USD", type number},
+            {"Value USD per KG", type number}
+        },
+        "en-US"
+    ),
+
+    // 12. FINAL COLUMN SELECTION (Vehicle Category & Sub Category MUST be listed here)
+    FinalTable = Table.SelectColumns(
+        ChangedTypes,
+        {
+            "Year", "Reporter", "Flow", "Partner Code", "Partner ISO", "Partner",
+            "Vehicle Category", "Sub Category", "HS Code", "HS Description",
+            "HS Classification", "Trade Value USD", "FOB Value USD", "CIF Value USD",
+            "Quantity", "Quantity Unit", "Net Weight KG", "Unit Price USD", "Value USD per KG"
+        },
+        MissingField.UseNull
+    ),
+    #"Filtered Rows" = Table.SelectRows(FinalTable, each ([Partner] <> "China, Hong Kong SAR" and [Partner] <> "China, Macao SAR" and [Partner] <> "World")),
+    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Unit Price USD", Currency.Type}, {"CIF Value USD", Currency.Type}, {"FOB Value USD", Currency.Type}, {"Value USD per KG", Currency.Type}})
+in
+    #"Changed Type"
