@@ -95,9 +95,6 @@ Follow these steps to replicate the environment, refresh the data pipeline, and 
 * **Power BI Desktop:** Download and install the latest version of [Power BI Desktop](https://powerbi.microsoft.com/desktop/).
 * **UN Comtrade API Subscription Key:** Register for a free API subscription at the [UN Comtrade Developer Portal](https://comtradeplus.un.org/) to access trade endpoint keys.
 
----
-
 ### Step-by-Step Setup
-
-Git clone https://github.com/RialSofiane/-China-Automotive-Export-industry-Dashboard-.git
+https://github.com/RialSofiane/Power-Bi-DashBoards.git
   
