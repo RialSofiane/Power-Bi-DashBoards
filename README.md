@@ -23,4 +23,4 @@ Explore a curated collection of interactive dashboards designed to transform com
 
 - 🔘 Buttons for page navigation
 
-[➡️ **View Full Project "China automotive Export Industry Analysis" Details**](/China_Automotive_Export_Industry_Dashboard/README.md)
+[➡️ **View Full Project Details "China automotive Export Industry Analysis" **](/China_Automotive_Export_Industry_Dashboard/README.md)
