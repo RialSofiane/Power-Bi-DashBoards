@@ -53,7 +53,7 @@ DIVIDE(
 ```
 - **Star Schema Implementation:** Designed a clean Star Schema by establishing single-direction (1:*) relationships between dimension tables and the central UN Comtrade export 
 fact table.~
-![StarSchema](Screen%20Shots\Star%20Schema%20.png)
+![StarSchema](China%20Automotive%20Export%20Industry%20Dashboard\Screen%20Shots\Star%20Schema%20.png)
 
 ## 🛠️ Tools & Technology
 - **Power BI Desktop:** Core platform used for star-schema data modeling, interactive dashboard visualization, and publishing analysis.
@@ -64,9 +64,9 @@ fact table.~
 
 - **REST API:** Ingested annual trade records dynamically from the UN Comtrade database.
 ## 📊 Dashboard Features & Visuals
-![Dashboard](Screen%20Shots\DashBoard.png)
+![Dashboard](China%20Automotive%20Export%20Industry%20Dashboard\Screen%20Shots\DashBoard.png)
 *Figure 1: Main Executive Overview page displaying top-level KPIs, powertrain distribution, and geographic trends.*
-![DadaDrillThroughPage](Screen%20Shots\Drill%20Through%20Page.png)
+![DadaDrillThroughPage](China%20Automotive%20Export%20Industry%20Dashboard\Screen%20Shots\Drill%20Through%20Page.png)
 *Figure 2: Dedicated drill-through page providing granular country-level breakdowns and pricing trends.*
 
 ## 💡 Key Insights & Findings
