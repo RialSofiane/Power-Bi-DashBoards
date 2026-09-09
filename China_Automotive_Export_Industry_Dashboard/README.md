@@ -77,7 +77,7 @@ fact table.~
 
 3. Electrified hybrid options represented growing complementary segments, with Plug-In Hybrids (PHEV) accounting for $15bn and Standard Hybrids (HEV) generating $7bn.
 
--**2023 Global EV Export Surge:**
+- **2023 Global EV Export Surge:**
 
 1. Electric Vehicle (EV) exports peaked with a massive 71% Year-over-Year (YoY) growth in 2023, representing the single largest annual expansion volume in China's automotive export history.
 
