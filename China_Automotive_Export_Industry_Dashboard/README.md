@@ -65,7 +65,7 @@ fact table.~
 ## 📊 Dashboard Features & Visuals
 ![Dashboard](Screen_Shots/DashBoard.png)
 *Figure 1: Main Executive Overview page displaying top-level KPIs, powertrain distribution, and geographic trends.*
-![DadaDrillThroughPage](Screen_Shots\Drill_Through.png)
+![DadaDrillThroughPage](/China_Automotive_Export_Industry_Dashboard/Screen_Shots/Drill_Through.png)
 *Figure 2: Dedicated drill-through page providing granular country-level breakdowns and pricing trends.*
 
 ## 💡 Key Insights & Findings
