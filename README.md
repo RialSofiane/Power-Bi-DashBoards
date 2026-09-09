@@ -11,7 +11,7 @@ Explore a curated collection of interactive dashboards designed to transform com
 
 - 📊 Core Visuals (Bar ,Line,Matrix)
 
-- 🗺️ Map Visualization for Geografic Data
+- 🗺️ Map Visualization for Geographic Market Foot Print
 
 - 🎯 Drill-through Functionality
 
@@ -23,4 +23,4 @@ Explore a curated collection of interactive dashboards designed to transform com
 
 - 🔘 Buttons for page navigation
 
-[➡️ **View Full Project "China automotive Export Industry Analysis" Details](/China_Automotive_Export_Industry_Dashboard/README.md)
+[➡️ **View Full Project "China automotive Export Industry Analysis" Details**](/China_Automotive_Export_Industry_Dashboard/README.md)
