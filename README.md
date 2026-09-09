@@ -1,5 +1,5 @@
 # My Power BI Projects Portfolio 📊
-Welcome! This repository documents my journey and growth as a Data Analyst. Here, I showcase end-to-end data projects—tracking how my analytical, technical, and storytelling capabilities evolve with every completed dashboard, pipeline, and model.
+Welcome! This repository documents my journey and growth as a Data Analyst. Here, I showcase end-to-end data projects—tracking how my analytical, technical, and storytelling capabilities evolve with every completed dashboard and model.
 # Featured Dashboards
 Explore a curated collection of interactive dashboards designed to transform complex datasets into clear, actionable insights. Each report highlights key performance metrics, dynamic visual reporting, and intuitive data storytelling. Dive into the interactive dashboards below to explore the data.
 ## China Automotive Export Industry Analysis
