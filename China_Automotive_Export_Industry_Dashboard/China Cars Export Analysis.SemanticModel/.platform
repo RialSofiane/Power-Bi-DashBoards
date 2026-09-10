@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "China Cars Export Analysis"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1b65870a-5974-46f8-a5ed-c6a43dac4427"
+  }
+}

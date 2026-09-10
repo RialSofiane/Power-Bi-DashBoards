@@ -1,0 +1,22 @@
+table Date_Dim
+	lineageTag: 4d40c4a5-baee-446f-9d7c-784060c58bea
+
+	column Year
+		formatString: 0
+		lineageTag: fa6284de-51f9-4173-a4a5-195a42f9b819
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: China_Cars_Exp_Flat[Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date_Dim = calculated
+		mode: import
+		source =
+				
+				DISTINCT(
+				    China_Cars_Exp_Flat[Year]
+				)
+
+	annotation PBI_Id = 85da1d30636a4ce795761857ef6dc975
+

@@ -1,0 +1,60 @@
+table Mesures
+	lineageTag: 088da1f0-6f68-44ca-a19c-56d26d14bb55
+
+	measure 'TOTAL REVENUE' = SUM(China_Cars_Exp_Flat[FOB Value USD])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: afe6621f-9cbc-47cf-9d8f-2bba928915a6
+
+	measure 'TOTAL QUANTITY' = SUM(China_Cars_Exp_Flat[Quantity])
+		formatString: #,0
+		lineageTag: 81c5cb7c-919e-487f-98b0-e8806422d64f
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'AVERAGE UNIT PRICE' =
+			
+			DIVIDE(
+			    SUM(China_Cars_Exp_Flat[FOB Value USD]),
+			    SUM(China_Cars_Exp_Flat[Quantity]),
+			    0)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 6b6155b4-de93-468d-b980-6c3f456fc266
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'YOY % Growth' = ```
+			
+			 VAR CurrentYearVal =[TOTAL REVENUE]
+			 VAR PriorYearVal= CALCULATE(
+			    [TOTAL REVENUE],FILTER(ALL(Date_Dim),Date_Dim[Year]=MAX(Date_Dim[Year])-1))
+			  RETURN
+			  DIVIDE(
+			    CurrentYearVal-PriorYearVal,PriorYearVal,0)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: dd3498fa-9474-4eec-82df-f5ca8d7b9d65
+
+	measure 'Average Weight' =
+			
+			DIVIDE(
+			    SUM(China_Cars_Exp_Flat[Net Weight KG]),
+			    [TOTAL QUANTITY],
+			    0)
+		formatString: 0.00
+		lineageTag: aff98846-569b-46f0-bf50-89c9909b6249
+
+	column Column
+		formatString: 0
+		lineageTag: 428b23a5-d581-4ea9-941c-5d627e6470d5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Mesures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = a65e4e7fcd4b4e3ebaa8c7c7f79e6a01
+

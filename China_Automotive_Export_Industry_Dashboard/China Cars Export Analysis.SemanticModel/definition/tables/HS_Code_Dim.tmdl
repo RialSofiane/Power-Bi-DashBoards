@@ -1,0 +1,48 @@
+table HS_Code_Dim
+	lineageTag: 6e20952c-8bae-4f75-9e85-67e1bdaa65ff
+
+	column 'HS Code'
+		lineageTag: 0f443001-93ce-4769-a2c6-fdf19afb0778
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: China_Cars_Exp_Flat[HS Code]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Category' =
+			
+			SWITCH(
+			    TRUE(),
+			    'HS_Code_Dim'[HS Code]="870310" ,"Vehicle for Snow , Golf , etc .",
+			    'HS_Code_Dim'[HS Code]="870321" ,"Gasoline <= 1000cc ",
+			    'HS_Code_Dim'[HS Code]="870322" ,"Gasoline 1000cc - 1500cc ",
+			    'HS_Code_Dim'[HS Code]="870323" ,"Gasoline 1500cc - 3000cc",
+			    'HS_Code_Dim'[HS Code]="870324" ,"Gasoline > 3000cc",
+			    'HS_Code_Dim'[HS Code]="870331" ,"Diesel <= 1500cc",
+			    'HS_Code_Dim'[HS Code]="870332" ,"Diesel 1500cc - 2500cc",
+			    'HS_Code_Dim'[HS Code]="870333" ,"Diesel ICE (> 2500 cc)",
+			    'HS_Code_Dim'[HS Code]="870340" ,"Gasoline Hybrid (HEV)",
+			    'HS_Code_Dim'[HS Code]="870350" ,"Diesel Hybrid (HEV)",
+			    'HS_Code_Dim'[HS Code]="870360" ,"Gasoline Plug-In Hybrid (PHEV)",
+			    'HS_Code_Dim'[HS Code]="870370" ,"Diesel Plug-In Hybrid (PHEV)",
+			    'HS_Code_Dim'[HS Code]="870380" ,"Battery Electric Vehicle (BEV)",
+			    'HS_Code_Dim'[HS Code]="870390" ,"Other Vehicles",
+			    "Unknown Category"
+			)
+		lineageTag: 9b0f2134-e80c-4c7d-bd15-3a0f6d7221c6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HS_Code_Dim = calculated
+		mode: import
+		source = ```
+				
+				DISTINCT(
+				    China_Cars_Exp_Flat[HS Code]
+				)
+				
+				```
+
+	annotation PBI_Id = 92403fc0a94b4b9092aded8ebd2a5b69
+

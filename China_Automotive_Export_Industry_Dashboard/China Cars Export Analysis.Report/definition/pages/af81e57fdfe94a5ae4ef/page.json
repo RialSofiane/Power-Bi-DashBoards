@@ -1,0 +1,114 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "af81e57fdfe94a5ae4ef",
+  "displayName": "Detailed View",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "94f90f127b78ec373639",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "HS_Code_Dim"
+              }
+            },
+            "Property": "Sub Category"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "h",
+              "Entity": "HS_Code_Dim",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "h"
+                          }
+                        },
+                        "Property": "Sub Category"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Battery Electric Vehicle (BEV)'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "99254b07b7c0a6c96592",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "7958dec824e1b6e4ec78",
+        "boundFilter": "94f90f127b78ec373639",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "HS_Code_Dim"
+              }
+            },
+            "Property": "Sub Category"
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "a9557ce9c6b9f176f405",
+      "target": "ae4c72aacc6abb11b0be",
+      "type": "DataFilter"
+    },
+    {
+      "source": "a9557ce9c6b9f176f405",
+      "target": "ab3c12dc9af64772927d",
+      "type": "DataFilter"
+    },
+    {
+      "source": "b50b739329d94cec0f75",
+      "target": "ab3c12dc9af64772927d",
+      "type": "DataFilter"
+    },
+    {
+      "source": "b50b739329d94cec0f75",
+      "target": "a9557ce9c6b9f176f405",
+      "type": "NoFilter"
+    },
+    {
+      "source": "b50b739329d94cec0f75",
+      "target": "9cbd1c9ace9fe20d39df",
+      "type": "NoFilter"
+    }
+  ]
+}

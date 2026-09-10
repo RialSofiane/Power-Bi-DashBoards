@@ -96,5 +96,18 @@ Follow these steps to replicate the environment, refresh the data pipeline, and 
 * **UN Comtrade API Subscription Key:** Register for a free API subscription at the [UN Comtrade Developer Portal](https://comtradeplus.un.org/) to access trade endpoint keys.
 
 ### Step-by-Step Setup
+
 https://github.com/RialSofiane/Power-Bi-DashBoards.git
+
+#### Step 2: Open the Report File
+Open the file inside the project directory using **Power BI Desktop**.
+
+#### Step 3: Insert Your API Key in the M Code
+1. On the main top ribbon, click **Transform Data** to open the **Power Query Editor**.
+
+2. On the top ribbon, click **Advanced Editor** (located in the *Home* or *View* tab).
+5. Replace `"Put your API Key here "` with your actual secret UN Comtrade subscription key inside the quotation marks (e.g., `"65844fdfg84dfhj8454j"`).
+![APIkey](/China_Automotive_Export_Industry_Dashboard/Screen_Shots/API%20Setup.png)
+6. Click **Done** at the bottom of the code window.
+7. Click **Close & Apply** on the top left of the main Power Query window to save your changes and load the fresh data.
   

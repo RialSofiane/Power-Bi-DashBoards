@@ -1,0 +1,12 @@
+relationship 1f2751d6-4f55-54dd-a041-606dedda6503
+	fromColumn: China_Cars_Exp_Flat.'HS Code'
+	toColumn: HS_Code_Dim.'HS Code'
+
+relationship 66d5d3d8-cf91-e833-20f8-590a35817d8b
+	fromColumn: China_Cars_Exp_Flat.Year
+	toColumn: Date_Dim.Year
+
+relationship cbc9e9c5-67ab-f30a-4387-7c02a1608402
+	fromColumn: China_Cars_Exp_Flat.'Partner Code'
+	toColumn: Country_Dim.'Partner Code'
+

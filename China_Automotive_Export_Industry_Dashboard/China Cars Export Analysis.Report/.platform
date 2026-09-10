@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "China Cars Export Analysis"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a84f638d-b480-4fb5-a34d-75a420d2c919"
+  }
+}
