@@ -107,7 +107,9 @@ Open the file inside the project directory using **Power BI Desktop**.
 
 2. On the top ribbon, click **Advanced Editor** (located in the *Home* or *View* tab).
 5. Replace `"Put your API Key here "` with your actual secret UN Comtrade subscription key inside the quotation marks (e.g., `"65844fdfg84dfhj8454j"`).
+
 ![APIkey](/China_Automotive_Export_Industry_Dashboard/Screen_Shots/API%20Setup.png)
-6. Click **Done** at the bottom of the code window.
-7. Click **Close & Apply** on the top left of the main Power Query window to save your changes and load the fresh data.
+
+7. Click **Done** at the bottom of the code window.
+8. Click **Close & Apply** on the top left of the main Power Query window to save your changes and load the fresh data.
   
