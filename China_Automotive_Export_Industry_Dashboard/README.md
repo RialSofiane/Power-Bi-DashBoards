@@ -99,10 +99,10 @@ Follow these steps to replicate the environment, refresh the data pipeline, and 
 
 https://github.com/RialSofiane/Power-Bi-DashBoards.git
 
-#### Step 2: Open the Report File
+#### Step 1: Open the Report File
 Open the file inside the project directory using **Power BI Desktop**.
 
-#### Step 3: Insert Your API Key in the M Code
+#### Step 2: Insert Your API Key in the M Code
 1. On the main top ribbon, click **Transform Data** to open the **Power Query Editor**.
 
 2. On the top ribbon, click **Advanced Editor** (located in the *Home* or *View* tab).
